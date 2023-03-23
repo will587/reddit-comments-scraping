@@ -1,0 +1,33 @@
+import requests
+import csv
+
+# To change anything in what the CSV is scraping, you can edit the URL with what you would like to see. For example
+# if you want to see all comments and not just in the past month, you can remove the "&after=28d" to see the past 500.
+# You can look more into all you can do with the api at the link below
+# https://github.com/pushshift/api
+
+url = "https://api.pushshift.io/reddit/search/comment?q=qelbree&size=500&after=81d&before=51d"
+
+response = requests.get(url)
+json_response = response.json()
+
+data_list = []
+
+for comment in json_response["data"]:
+    if "body" in comment:
+        data_list.append(comment["body"])
+        data_list.append(comment["utc_datetime_str"])
+        data_list.append(comment["subreddit_name_prefixed"])
+
+
+csv_filename = "jan_comments.csv"
+
+with open(csv_filename, "w", newline="", encoding="utf-8") as csv_file:
+    csv_writer = csv.writer(csv_file)
+
+    csv_writer.writerow(["Comment: "])
+    csv_writer.writerow(["Date: "])
+    csv_writer.writerow(["Subreddit Commented In: "])
+    for comment in data_list:
+        csv_writer.writerow([comment])
+
