@@ -6,7 +6,7 @@ import csv
 # You can look more into all you can do with the api at the link below
 # https://github.com/pushshift/api
 
-url = "https://api.pushshift.io/reddit/search/comment?q=qelbree&size=500&after=81d&before=51d"
+url = "https://api.pushshift.io/reddit/search/comment?q=adderall&size=500&after=122d&before=1d"
 
 response = requests.get(url)
 json_response = response.json()
